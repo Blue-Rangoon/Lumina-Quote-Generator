@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create beautiful quote images instantly." />
+  <title>Lumina | Quote Generator</title>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- html2canvas for PNG export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Tailwind CSS CDN kept available for utility-free static delivery compatibility. -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- ==================== FLOATING GITHUB LINK ==================== -->
+  <a
+    href="https://github.com/Blue-Rangoon"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="github-float"
+    aria-label="Visit GitHub"
+    title="GitHub"
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+    </svg>
+  </a>
+
+  <main class="page">
+    <!-- ==================== MAIN CARD ==================== -->
+    <section class="card" role="region" aria-label="Quote generator">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <div class="logo-mark" aria-hidden="true">
+            <!-- Quote mark logo -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/>
+              <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3z"/>
+            </svg>
+          </div>
+          <h1 class="title">Lumina | Quote Generator</h1>
+        </div>
+        <p class="subtitle">Create beautiful quote images instantly.</p>
+      </header>
+
+      <!-- ---- Avatar Upload ---- -->
+      <div class="section section-gap">
+        <label class="label" for="fileInput">Avatar</label>
+
+        <div
+          class="dropzone"
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload avatar. Click, press Enter, or drop an image."
+        >
+          <div class="dropzone-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <div class="dropzone-text">Drop image or click to browse</div>
+          <div class="dropzone-hint">PNG, JPG • Max 5 MB</div>
+
+          <input
+            type="file"
+            id="fileInput"
+            class="hidden-input"
+            accept="image/png,image/jpeg"
+            aria-label="Choose avatar image"
+          />
+        </div>
+
+        <!-- Preview after upload -->
+        <div class="preview preview-spaced" id="preview" aria-live="polite">
+          <img class="preview-avatar" id="previewAvatar" alt="Uploaded avatar preview" />
+          <div class="preview-info">
+            <div class="preview-name" id="previewName"></div>
+            <div class="preview-size" id="previewSize"></div>
+          </div>
+          <button class="preview-remove" id="removeBtn" aria-label="Remove avatar" title="Remove">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ---- Editable Prefix + Statement Inputs ---- -->
+      <div class="section quote-fields section-gap">
+        <div class="field-block">
+          <div class="label-row">
+            <label class="label" for="prefixInput">Prefix</label>
+            <label class="color-control" for="prefixColor">
+              <span>Color</span>
+              <input
+                type="color"
+                id="prefixColor"
+                value="#ffffff"
+                aria-label="Choose prefix color"
+              />
+            </label>
+          </div>
+          <input
+            type="text"
+            id="prefixInput"
+            class="text-input"
+            value=""
+            placeholder="Upload an avatar first..."
+            maxlength="60"
+            disabled
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Type the quote prefix"
+          />
+          <div class="counter" id="prefixCounter" aria-live="polite">9 / 60</div>
+        </div>
+
+        <div class="field-block">
+          <div class="label-row">
+            <label class="label" for="statementInput">Quote Statement</label>
+            <label class="color-control" for="statementColor">
+              <span>Color</span>
+              <input
+                type="color"
+                id="statementColor"
+                value="#ffffff"
+                aria-label="Choose statement color"
+              />
+            </label>
+          </div>
+          <input
+            type="text"
+            id="statementInput"
+            class="text-input"
+            placeholder="Upload an avatar first..."
+            maxlength="120"
+            disabled
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Type the quote statement"
+          />
+          <div class="counter" id="statementCounter" aria-live="polite">0 / 120</div>
+        </div>
+      </div>
+
+      <!-- ---- Live Preview ---- -->
+      <div class="section section-gap">
+        <label class="label">Preview</label>
+        <div class="live-preview" id="livePreview">
+          <img class="live-avatar" id="liveAvatar" alt="" />
+          <div class="live-text">
+            <div class="live-those-who" id="livePrefix">Enter your header</div>
+            <div class="live-user" id="liveStatement">…your statement will appear here</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- Actions ---- -->
+      <div class="section actions">
+        <button class="btn btn-secondary" id="copyBtn" disabled aria-label="Copy quote text">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copy
+        </button>
+        <button class="btn btn-secondary" id="resetBtn" aria-label="Reset all fields">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+          </svg>
+          Reset
+        </button>
+        <button class="btn btn-primary" id="downloadBtn" disabled aria-label="Download quote image as PNG">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download PNG
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <kbd>⚠️ Note:</kbd> This site does not store any data. All processing is done in your browser.
+        <p></p>
+        <kbd>💡 Tip:</kbd> Use the color pickers to customize text colors.
+      </footer>
+    </section>
+  </main>
+
+  <!-- ==================== HIDDEN EXPORT CARD (1600x900) ==================== -->
+  <div class="export-card" id="exportCard" aria-hidden="true">
+    <div class="export-avatar-wrap">
+      <div class="export-avatar-glow"></div>
+      <img class="export-avatar" id="exportAvatar" alt="" />
+    </div>
+    <div class="export-text">
+      <div class="export-those-who" id="exportPrefix">Socrates said</div>
+      <div class="export-user-text" id="exportStatement"></div>
+    </div>
+    <div class="export-watermark">
+      Developed By
+      <span>Blue-Rangoon</span>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST CONTAINER ==================== -->
+  <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+
+  <!-- JavaScript -->
+  <script src="index.js"></script>
+</body>
+</html>
