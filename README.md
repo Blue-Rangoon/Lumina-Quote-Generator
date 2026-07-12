@@ -7,8 +7,8 @@
 ### Phase 1 updates: 
 
 - [x] Upload avatar
-- [x] Edit prefix header
-- [x] Edit main statement
+- [x] Edit Verbatim (Prefix)
+- [x] Edit Commentary (main statement)
 - [x] Color customization of text
 - [x] Live preview of possible output
 - [X] Horizontal image output
