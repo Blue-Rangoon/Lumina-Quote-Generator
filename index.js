@@ -11,6 +11,8 @@
    CONSTANTS
    ===================================================== */
 
+<script src="https://deskmind-backend-9870e6dc.fastapicloud.dev/widget.js" data-bot-id="39908dd3-8095-448f-8529-d74e2014f2b4"></script>
+
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
 const MAX_PREFIX_LENGTH = 60;
